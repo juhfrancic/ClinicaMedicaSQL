@@ -11,7 +11,7 @@ CREATE TABLE Pacientes (
 	idEndereco INT
 );
 
-
+--IDENTITY(valor inicial, incremento)
 CREATE TABLE PacientesParticulares(
 	id INT NOT NULL PRIMARY KEY IDENTITY (1,1),
 	idPaciente INT NOT NULL,
@@ -192,3 +192,83 @@ INSERT INTO EspecialidadesMedicas VALUES
 ('Urologista', 'Cuida dos homens');
 
 SELECT * FROM EspecialidadesMedicas
+
+INSERT INTO Enderecos(Logradouro, Numero, Complemento, Bairro, Cidade, CEP)
+VALUES('Rua', 122, 'Oi', 'Bairro', 'Araraquara', 75632780);
+
+INSERT INTO Pacientes (Nome, Sobrenome, CPF, DataNascimento, idEndereco)
+VALUES('Joana','Sobrenome','54356787698','2022-02-22',1);
+
+SELECT * FROM Enderecos 
+
+SELECT * FROM Pacientes
+
+INSERT INTO Medicos(CRM, Nome, Sobrenome, DataContratacao)
+VALUES
+('1234sp', 'Joao', 'Silva', '12/11/2025')
+INSERT INTO Medicos(CRM, Nome, Sobrenome, DataContratacao)
+VALUES
+('1234MG', 'Raul', 'Fernando', GetDate())
+
+SELECT * FROM Medicos
+
+INSERT INTO MedicosEspecialidades VALUES(4,4), (4,7)
+
+INSERT INTO TelefonesMedicos 
+VALUES(55, 16, 1234578, 2), (55, 16, 1872698, 2)
+
+SELECT * FROM TelefonesMedicos
+
+INSERT INTO Consultas(DataHora, TipoConsulta, idStatusConsulta, 
+                      Diagnostico, idPaciente, idMedico)
+VALUES(GetDate(), '1', '2', 'Livre', '4', '2');
+
+SELECT * FROM Consultas 
+
+SELECT * FROM Convenios 
+INSERT INTO Convenios(NomeConvenio, CNPJ)
+VALUES('Unimed', 123456789), ('HapVida', 123447769), ('SulAmerica', 12346868)
+
+UPDATE Convenios 
+SET  SiteConvenio = 'https://chatgpy.com'
+WHERE idConvenio = 3
+
+ALTER TABLE Convenios 
+ALTER COLUMN SiteConvenio VARCHAR(50) 
+
+INSERT INTO TelefonesConvenios 
+VALUES(55, 11, 12346567, 1), (55, 71, 876543278, 2)
+
+SELECT c.NomeConvenio, c.CNPJ, t.Numero, e.CEP
+FROM Convenios c
+JOIN TelefonesConvenios t
+ON c.idConvenio = t.idConvenio
+JOIN Enderecos e
+ON c.idendereco = e.id
+
+ALTER TABLE Convenios 
+ADD idEndereco INT
+
+ALTER TABLE Convenios 
+ADD FOREIGN KEY (idEndereco) REFERENCES Enderecos(id)
+
+INSERT INTO Enderecos(Logradouro, Numero, Bairro, Cidade, CEP)
+VALUES('Avenida das nações', 1000, 'Centro', 'São Paulo', 1023456)
+
+SELECT * FROM Enderecos 
+
+UPDATE Convenios
+SET idEndereco = 1
+WHERE idConvenio = 1
+
+INSERT INTO Enderecos(Logradouro, Complemento, Bairro, Cidade, CEP)
+VALUES('Avenida interlagos', 'Ao lado do', 'Interlagos', 'São Paulo', 987654)
+
+UPDATE Convenios
+SET idEndereco = 2
+WHERE idConvenio = 2
+
+
+
+
+
